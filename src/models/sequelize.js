@@ -12,6 +12,12 @@ export const sequelize = new Sequelize(databaseURL, {
     underscored: true, // les noms des colonnes dans le DB seront en snake case
   },
   logging: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
 });
 
 try {
