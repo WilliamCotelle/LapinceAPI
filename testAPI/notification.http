@@ -1,0 +1,12 @@
+### Récupérer les notifications de l'utilisateur connecté
+GET http://localhost:4000/notifications
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqZXJvbWVAY2xvY2suY29tIiwicHJvZmlsUGljdHVyZSI6Ii91cGxvYWRzL2xvZ28ucG5nIiwiaWF0IjoxNzI2NDc4ODg5LCJleHAiOjE3MjY1NjUyODl9.hwnPBzybeH3BsHwnzE4xg0yo-jAbHVDQqje4NfjVWhw
+
+###
+
+### Marquer une notification comme lue
+PUT http://localhost:4000/notifications/{{notificationId}}/read
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqZXJvbWVAY2xvY2suY29tIiwicHJvZmlsUGljdHVyZSI6Ii91cGxvYWRzL2xvZ28ucG5nIiwiaWF0IjoxNzI2NDc4ODg5LCJleHAiOjE3MjY1NjUyODl9.hwnPBzybeH3BsHwnzE4xg0yo-jAbHVDQqje4NfjVWhw
+Content-Type: application/json
+
+{}

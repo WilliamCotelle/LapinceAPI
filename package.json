@@ -1,0 +1,29 @@
+{
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "email-validator": "^2.0.4",
+    "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.15",
+    "nodemon": "^3.1.4",
+    "pg": "^8.12.0",
+    "sanitize-html": "^2.13.0",
+    "sequelize": "^6.37.3",
+    "sequelize-mock": "^0.10.2",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
+    "uuid": "^10.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "db:create": "node src/migrations/01.createTables.js",
+    "db:seed": "node src/migrations/02.seedTables.js",
+    "db:reset": "npm run db:create && npm run db:seed"
+  }
+}

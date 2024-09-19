@@ -1,0 +1,34 @@
+
+
+### Récupérer tous les comptes bancaires
+GET http://localhost:4000/bank-accounts
+
+### Récupérer un compte bancaire par ID
+GET http://localhost:4000/bank-accounts/1
+
+### Créer un nouveau compte bancaire
+POST http://localhost:4000/bank-accounts
+Content-Type: application/json
+
+{
+  "name": "Compte Principal",
+  "initial_balance": 1000.00
+}
+
+### Mettre à jour un compte bancaire
+PUT http://localhost:4000/bank-accounts/1
+Content-Type: application/json
+
+{
+  "name": "Compte Modifié",
+  "initial_balance": 1500.00
+}
+
+### Supprimer un compte bancaire
+DELETE http://localhost:4000/bank-accounts/1
+
+
+### Test de la route pour obtenir les comptes bancaires de l'utilisateur connecté
+GET http://localhost:3000/bank-accounts/accounts
+Authorization: Bearer bd71589c069ee87684f5fcbedf7f0a4f5d78ee2772f33b74eeacdae18c617ab0
+

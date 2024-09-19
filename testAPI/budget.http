@@ -1,0 +1,35 @@
+### Créer un budget
+POST http://localhost:4000/budget/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ3aWxsaWFtLmNvdGVsbGVAZ21haWwuY29tIiwiaWF0IjoxNzI1OTU4Mjc2LCJleHAiOjE3MjYwMTgyNzZ9.kmDg3WrZnPw0E4O4P2UKsaMxzy3IEwYve9BxrYtc-Is
+
+{
+  "limitAmount": 5000,
+  "id_category": 1
+}
+
+### Récupérer tous les budgets
+GET http://localhost:4000/budget
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ3aWxsaWFtLmNvdGVsbGVAZ21haWwuY29tIiwiaWF0IjoxNzI1OTU4Mjc2LCJleHAiOjE3MjYwMTgyNzZ9.kmDg3WrZnPw0E4O4P2UKsaMxzy3IEwYve9BxrYtc-Is
+
+### Récupérer un budget par ID
+GET http://localhost:4000/budget/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ3aWxsaWFtLmNvdGVsbGVAZ21haWwuY29tIiwiaWF0IjoxNzI1OTU4Mjc2LCJleHAiOjE3MjYwMTgyNzZ9.kmDg3WrZnPw0E4O4P2UKsaMxzy3IEwYve9BxrYtc-Is
+
+### Mettre à jour un budget existant
+PUT http://localhost:4000/budget/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ3aWxsaWFtLmNvdGVsbGVAZ21haWwuY29tIiwiaWF0IjoxNzI1OTU4Mjc2LCJleHAiOjE3MjYwMTgyNzZ9.kmDg3WrZnPw0E4O4P2UKsaMxzy3IEwYve9BxrYtc-Is
+
+{
+  "limitAmount": 6000,
+  "id_category": 2
+}
+
+### Supprimer un budget
+DELETE http://localhost:4000/budget/22
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ3aWxsaWFtLmNvdGVsbGVAZ21haWwuY29tIiwiaWF0IjoxNzI1OTU4Mjc2LCJleHAiOjE3MjYwMTgyNzZ9.kmDg3WrZnPw0E4O4P2UKsaMxzy3IEwYve9BxrYtc-Is
+
+### Vérifier que le budget a été supprimé
+GET http://localhost:4000/budget/22
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ3aWxsaWFtLmNvdGVsbGVAZ21haWwuY29tIiwiaWF0IjoxNzI1OTU4Mjc2LCJleHAiOjE3MjYwMTgyNzZ9.kmDg3WrZnPw0E4O4P2UKsaMxzy3IEwYve9BxrYtc-Is

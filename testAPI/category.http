@@ -1,0 +1,7 @@
+### récupérer toutes les categories 
+get http://localhost:4000/category
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ3aWxsaWFtLmNvdGVsbGVAZ21haWwuY29tIiwiaWF0IjoxNzI1OTUyNTQ3LCJleHAiOjE3MjYwMTI1NDd9.ZcfCkxe-Ac_bbvnYSFdM_LYPpeJPfC6x60DSGonlEUg
+
+### récupérer une catégorie 
+get http://localhost:4000/category/1
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJ3aWxsaWFtLmNvdGVsbGVAZ21haWwuY29tIiwiaWF0IjoxNzI1OTUyNTQ3LCJleHAiOjE3MjYwMTI1NDd9.ZcfCkxe-Ac_bbvnYSFdM_LYPpeJPfC6x60DSGonlEUg
