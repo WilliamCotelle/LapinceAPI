@@ -7,14 +7,21 @@ import { JWT_SECRET } from "../../config/config.js";
 export const userController = {
   async signup(req, res) {
     const { email, firstName, lastName, password, confirmation } = req.body;
+    const normalizedEmail = email.toLowerCase();
 
-    if (!email || !firstName || !lastName || !password || !confirmation) {
+    if (
+      !normalizedEmail ||
+      !firstName ||
+      !lastName ||
+      !password ||
+      !confirmation
+    ) {
       return res
         .status(400)
         .json({ error: "Tous les champs doivent être renseignés" });
     }
 
-    if (!emailValidator.validate(email)) {
+    if (!emailValidator.validate(normalizedEmail)) {
       return res
         .status(400)
         .json({ error: "L'email renseigné n'est pas valide" });
@@ -27,7 +34,9 @@ export const userController = {
     }
 
     try {
-      const existingUser = await User.findOne({ where: { email } });
+      const existingUser = await User.findOne({
+        where: { email: normalizedEmail },
+      });
       if (existingUser) {
         return res
           .status(400)
@@ -37,27 +46,42 @@ export const userController = {
       const hashedPassword = await hash(password);
 
       const newUser = await User.create({
-        email,
+        email: normalizedEmail,
         firstName,
         lastName,
         password: hashedPassword,
         profilPicture: "/uploads/logo.png",
       });
 
-      // Créer un compte bancaire par défaut pour le nouvel utilisateur
       await BankAccount.create({
         name: "Compte Principal",
-        initial_balance: 0, // Vous pouvez définir un solde initial si nécessaire
+        initial_balance: 0,
         id_user: newUser.id,
       });
 
+      // Générer le token JWT
+      const token = jwt.sign(
+        {
+          id: newUser.id,
+          email: newUser.email,
+          profilPicture: newUser.profilPicture,
+        },
+        JWT_SECRET,
+        {
+          expiresIn: "24h",
+        }
+      );
+
+      // Retourner la réponse avec le token et les informations utilisateur
       return res.status(201).json({
         message: "Utilisateur créé avec succès",
+        token, // Ajouter le token à la réponse
         user: {
           id: newUser.id,
           email: newUser.email,
           firstName: newUser.firstName,
           lastName: newUser.lastName,
+          profilPicture: newUser.profilPicture,
         },
       });
     } catch (error) {
@@ -71,33 +95,30 @@ export const userController = {
     }
   },
 
-  // Connexion utilisateur
   async signIn(req, res) {
     const { email, password } = req.body;
+    const normalizedEmail = email.toLowerCase();
 
-    if (!email || !password) {
-      console.log("Missing fields:", { email, password });
+    if (!normalizedEmail || !password) {
+      console.log("Missing fields:", { email: normalizedEmail, password });
       return res.status(400).json({ error: "Email et mot de passe requis" });
     }
 
-    // Validez l'email
-    if (!emailValidator.validate(email)) {
-      console.log("Invalid email:", email);
+    if (!emailValidator.validate(normalizedEmail)) {
+      console.log("Invalid email:", normalizedEmail);
       return res
         .status(400)
         .json({ error: "L'email renseigné n'est pas valide" });
     }
 
     try {
-      // Trouvez l'utilisateur par email
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({ where: { email: normalizedEmail } });
       if (!user) {
         return res
           .status(401)
           .json({ error: "Email ou mot de passe incorrect" });
       }
 
-      // Comparez le mot de passe fourni avec le mot de passe stocké
       const isPasswordValid = await compare(password, user.password);
       if (!isPasswordValid) {
         return res
@@ -105,7 +126,6 @@ export const userController = {
           .json({ error: "Email ou mot de passe incorrect" });
       }
 
-      // Générez un token JWT
       const token = jwt.sign(
         {
           id: user.id,
@@ -119,7 +139,6 @@ export const userController = {
       );
       console.log("Generated token:", token);
 
-      // Retournez le token dans la réponse
       return res.status(200).json({
         message: "Connexion réussie",
         token,

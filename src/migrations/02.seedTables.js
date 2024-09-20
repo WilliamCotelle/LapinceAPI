@@ -49,7 +49,7 @@ async function seedDatabase() {
         id_user: users[0].id,
       },
       {
-        name: "Livret d'Epargne",
+        name: "Compte secondaire",
         initial_balance: 1970.0,
         id_user: users[0].id,
       },

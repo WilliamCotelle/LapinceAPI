@@ -48,12 +48,8 @@ app.use(errorMiddleware);
 
 // Gestion des connexions Socket.io
 io.on("connection", (socket) => {
-  console.log("A user connected");
-
   // Gestion de la déconnexion
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
+  socket.on("disconnect", () => {});
 });
 
 app.use((req, res, next) => {

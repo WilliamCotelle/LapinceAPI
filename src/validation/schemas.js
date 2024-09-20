@@ -3,7 +3,7 @@ import { errorMessages } from "../errors/errorMessages.js";
 import { HTTPError } from "../errors/httpError.js";
 
 export const signUpSchema = Joi.object({
-  email: Joi.string().email().required().messages({
+  email: Joi.string().email().lowercase().required().messages({
     "string.email": errorMessages.email.invalid,
     "any.required": errorMessages.email.required,
   }),
@@ -43,7 +43,7 @@ export const signUpSchema = Joi.object({
 });
 
 export const signInSchema = Joi.object({
-  email: Joi.string().email().required().messages({
+  email: Joi.string().email().lowercase().required().messages({
     "string.email": errorMessages.email.invalid,
     "any.required": errorMessages.email.required,
   }),

@@ -76,8 +76,22 @@ export const getAllBudgets = async (req, res) => {
 export const getBudgetsByAccount = async (req, res) => {
   try {
     const { accountId } = req.params;
+    const userId = req.user.id; // L'ID de l'utilisateur connecté, récupéré depuis le token
+
+    // Vérifiez d'abord si le compte bancaire appartient bien à l'utilisateur connecté
+    const bankAccount = await BankAccount.findOne({
+      where: { id: accountId, id_user: userId }, // Filtrer par userId pour s'assurer que c'est bien son compte
+    });
+
+    if (!bankAccount) {
+      return res
+        .status(403)
+        .json({ message: "Accès interdit. Ce compte ne vous appartient pas." });
+    }
+
+    // Ensuite, récupérer les budgets associés au compte bancaire
     const budgets = await Budget.findAll({
-      where: { id_bank_account: accountId }, // Assurez-vous que le champ est correct
+      where: { id_bank_account: accountId },
       include: [
         {
           model: Category,
@@ -93,7 +107,7 @@ export const getBudgetsByAccount = async (req, res) => {
     });
     return res.status(200).json(budgets);
   } catch (error) {
-    console.error("Error fetching budgets:", error); // Debug
+    console.error("Erreur lors de la récupération des budgets:", error);
     return res.status(500).json({ message: error.message });
   }
 };

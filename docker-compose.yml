@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  backend:
+    build: .
+    ports:
+      - "4000:4000" # Utilisez le port défini dans votre fichier .env
+    environment:
+      - PORT=${PORT}
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=${PGPORT}
+      - DATABASE_USER=${PGUSER}
+      - DATABASE_PASSWORD=${PGPASSWORD}
+      - DATABASE_NAME=${PGDATABASE}
+      - ALLOWED_DOMAINS=${ALLOWED_DOMAINS}
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

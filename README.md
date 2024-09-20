@@ -113,4 +113,3 @@ Enfin, poussez les modifications vers le dépôt distant pour que `main` soit à
 ```bash
 git push origin main
 ```
-# LapinceAPI
