@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-// on récupérer les variables nécessaires
+// on récupère les variables nécessaires
 const { PGUSER, PGPASSWORD, PGHOST, PGPORT, PGDATABASE } = process.env;
 
 // on construit l'url de connexion
@@ -12,6 +12,12 @@ export const sequelize = new Sequelize(databaseURL, {
     underscored: true, // les noms des colonnes dans le DB seront en snake case
   },
   logging: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Utilise cette option si ton certificat SSL n'est pas autorisé
+    },
+  },
 });
 
 try {
