@@ -49,7 +49,6 @@ export const createBudget = async (req, res) => {
   }
 };
 
-// Récupérer tous les budgets
 // Récupérer tous les budgets avec les informations de catégorie
 // Récupérer tous les budgets
 export const getAllBudgets = async (req, res) => {

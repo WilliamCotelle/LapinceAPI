@@ -21,5 +21,4 @@ BankAccount.init(
   }
 );
 
-// Assurez-vous d'exporter la classe
 export default BankAccount;

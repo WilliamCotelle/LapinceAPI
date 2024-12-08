@@ -1,40 +1,34 @@
-// src/auth/scrypt.js
+import bcrypt from "bcrypt";
 
-import { scrypt, randomBytes, timingSafeEqual } from "node:crypto";
-
-const keyLength = 32;
+const saltRounds = 10; // Nombre de tours de salage standard
 
 /**
- * Hash a string using scrypt
+ * Hasher un mot de passe avec bcrypt
  *
- * @param {string} password
- * @returns {string} The salt+hash
+ * @param {string} password - Le mot de passe en clair à hasher
+ * @returns {Promise<string>} - Le mot de passe hashé
  */
-export const hash = (password) => {
-  return new Promise((resolve, reject) => {
-    const salt = randomBytes(16).toString("hex");
-
-    scrypt(password, salt, keyLength, (err, derivedKey) => {
-      if (err) reject(err);
-      resolve(`${salt}.${derivedKey.toString("hex")}`);
-    });
-  });
+export const hash = async (password) => {
+  try {
+    return await bcrypt.hash(password, saltRounds);
+  } catch (err) {
+    throw new Error("Erreur lors du hashage du mot de passe : " + err.message);
+  }
 };
 
 /**
- * Compare a string with a salt+hash
+ * Comparer un mot de passe avec un mot de passe hashé
  *
- * @param {string} password The plain text password
- * @param {string} hash The hash+salt to check against
- * @returns {boolean}
+ * @param {string} password - Le mot de passe en clair
+ * @param {string} hashedPassword - Le mot de passe hashé à comparer
+ * @returns {Promise<boolean>} - Renvoie true si les mots de passe correspondent, sinon false
  */
-export const compare = (password, hash) => {
-  return new Promise((resolve, reject) => {
-    const [salt, hashKey] = hash.split(".");
-    const hashKeyBuff = Buffer.from(hashKey, "hex");
-    scrypt(password, salt, keyLength, (err, derivedKey) => {
-      if (err) reject(err);
-      resolve(timingSafeEqual(hashKeyBuff, derivedKey));
-    });
-  });
+export const compare = async (password, hashedPassword) => {
+  try {
+    return await bcrypt.compare(password, hashedPassword);
+  } catch (err) {
+    throw new Error(
+      "Erreur lors de la comparaison du mot de passe : " + err.message
+    );
+  }
 };
